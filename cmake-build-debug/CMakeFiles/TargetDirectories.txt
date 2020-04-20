@@ -1,0 +1,3 @@
+/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-debug/CMakeFiles/word_count.dir
+/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-debug/CMakeFiles/edit_cache.dir
