@@ -60,7 +60,6 @@ int main(int argc, char *argv[]) {
     po::variables_map vm;
     store(parse_config_file(conf, config_parser), vm);
     notify(vm);
-
     if (thr < 1) {
         std::cerr << "Insufficient number of threads." << std::endl;
         exit(3);

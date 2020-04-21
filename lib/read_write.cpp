@@ -47,8 +47,10 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
             entry_size = archive_entry_size(entry);
             std::string output(entry_size, char{});
             //write explicitly to the other buffer
-            r = archive_read_data(a, &output[0], output.size());
-            tq->push_back(output);
+//            if(output.size() < 10000000){
+                r = archive_read_data(a, &output[0], output.size());
+                tq->push_back(output);
+//            }
         }
 
         if (r < ARCHIVE_WARN) {

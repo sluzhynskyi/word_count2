@@ -134,6 +134,7 @@ word_count: /usr/lib/x86_64-linux-gnu/libicui18n.so
 word_count: /usr/lib/x86_64-linux-gnu/libboost_locale.so
 word_count: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 word_count: /usr/lib/x86_64-linux-gnu/libboost_system.so
+word_count: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
 word_count: /usr/lib/x86_64-linux-gnu/libarchive.so
 word_count: CMakeFiles/word_count.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable word_count"

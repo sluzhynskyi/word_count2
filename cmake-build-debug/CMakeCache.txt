@@ -38,6 +38,18 @@ Boost_LOCALE_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_locale.so
 //Boost locale library (release)
 Boost_LOCALE_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_locale.so
 
+//Boost program_options library (debug)
+Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_program_options.so
+
+//Boost program_options library (release)
+Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_program_options.so
+
+//Boost program_option library (debug)
+Boost_PROGRAM_OPTION_LIBRARY_DEBUG:FILEPATH=Boost_PROGRAM_OPTION_LIBRARY_DEBUG-NOTFOUND
+
+//Boost program_option library (release)
+Boost_PROGRAM_OPTION_LIBRARY_RELEASE:FILEPATH=Boost_PROGRAM_OPTION_LIBRARY_RELEASE-NOTFOUND
+
 //Boost system library (debug)
 Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/x86_64-linux-gnu/libboost_system.so
 
@@ -358,6 +370,14 @@ Boost_LIBRARY_DIR_RELEASE-ADVANCED:INTERNAL=1
 Boost_LOCALE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_LOCALE_LIBRARY_RELEASE
 Boost_LOCALE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG
+Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE
+Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROGRAM_OPTION_LIBRARY_DEBUG
+Boost_PROGRAM_OPTION_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROGRAM_OPTION_LIBRARY_RELEASE
+Boost_PROGRAM_OPTION_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
 Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
@@ -522,7 +542,7 @@ CMAKE_UNAME:INTERNAL=/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding Boost
-FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/include][cfound components: locale filesystem system ][v1.65.1()]
+FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[/usr/include][cfound components: locale filesystem system program_options ][v1.65.1()]
 //Details about finding ICU
 FIND_PACKAGE_MESSAGE_DETAILS_ICU:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libicuuc.so;/usr/lib/x86_64-linux-gnu/libicui18n.so][ON][v60.2()]
 //Details about finding LibArchive
@@ -546,7 +566,7 @@ ProcessorCount_cmd_nproc-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_sysctl
 ProcessorCount_cmd_sysctl-ADVANCED:INTERNAL=1
 //Components requested for this build tree.
-_Boost_COMPONENTS_SEARCHED:INTERNAL=filesystem;locale;system
+_Boost_COMPONENTS_SEARCHED:INTERNAL=filesystem;locale;program_options;system
 //Last used Boost_INCLUDE_DIR value.
 _Boost_INCLUDE_DIR_LAST:INTERNAL=/usr/include
 //Last used Boost_LIBRARY_DIR_DEBUG value.
