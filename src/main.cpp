@@ -116,39 +116,30 @@ int main(int argc, char *argv[]) {
         exit(3);
     }
 
-    auto start_load = get_current_time_fenced();
 
     t_queue<std::string> str_tq;
 
 
-    auto start_merge = get_current_time_fenced();
-    auto finish_merge = get_current_time_fenced();
-
-    auto start_count = get_current_time_fenced();
-
-    auto start_time = get_current_time_fenced();
-
     std::map<std::string, int> dict;
     std::vector<std::thread> v;
-
+    std::chrono::high_resolution_clock::time_point start;
 
     if (thr == 1) {
 
         v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
-
+        start = get_current_time_fenced();
         v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dict));
 
         for (auto &t: v) {
             t.join();
         }
     } else {
-        start_count = get_current_time_fenced();
         std::map<std::string, int> dicts[thr];
         t_queue<std::map<std::string, int>> dict_tq;
         std::vector<std::thread> m;
 
         v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
-
+        start = get_current_time_fenced();
         for (int i = 0; i < thr; ++i) {
             v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dicts[i]));
         }
@@ -156,11 +147,10 @@ int main(int argc, char *argv[]) {
             t.join();
         }
 
-        for (const auto& d : dicts) {
+        for (const auto &d : dicts) {
             dict_tq.push_back(d);
         }
 
-        start_merge = get_current_time_fenced();
 
         for (int i = 0; i < merge_thr; ++i) {
             m.emplace_back(merge_dict, std::ref(dict_tq));
@@ -174,13 +164,7 @@ int main(int argc, char *argv[]) {
     }
 
     auto finish = get_current_time_fenced();
-
-    auto count_time = start_merge - start_count;
-    auto merge_time = finish - start_merge;
-
-    std::cout << "Counting: " << static_cast<float>(to_ms(count_time)) / 1000 << std::endl;
-    std::cout << "Merge: " << static_cast<float>(to_ms(merge_time)) / 1000 << std::endl;
-    std::cout << "Total: " << static_cast<float>(to_ms(merge_time + count_time)) / 1000 << std::endl;
+    std::cout << "Total: " << static_cast<float>(to_ms(finish - start) / 60)<< std::endl;
 
     write_file(out_a, dict);
     std::vector<std::pair<std::string, int>> vec = sort_by_value(dict);
