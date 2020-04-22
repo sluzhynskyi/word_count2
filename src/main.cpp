@@ -124,14 +124,16 @@ int main(int argc, char *argv[]) {
     }
 
     std::string in, out_a, out_n;
-    int thr;
+    int thr, merge_thr;
 
     po::options_description config_parser;
     config_parser.add_options()
             ("in", po::value<std::string>(&in)->default_value("data_in/"))
             ("out_a", po::value<std::string>(&out_a)->default_value("data_out/result_by_name.txt"))
             ("out_n", po::value<std::string>(&out_n)->default_value("data_out/result_by_number.txt"))
-            ("thr", po::value<int>(&thr)->default_value(1));
+            ("thr", po::value<int>(&thr)->default_value(1))
+            ("merge_thr", po::value<int>(&merge_thr)->default_value(1));
+
     po::variables_map vm;
     store(parse_config_file(conf, config_parser), vm);
     notify(vm);
@@ -213,7 +215,7 @@ int main(int argc, char *argv[]) {
 //        std::cout << dict_tq.get_size() << std::endl;
         start_merge = get_current_time_fenced();
 
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < merge_thr; ++i) {
             m.emplace_back(merge_dict, std::ref(dict_tq));
         }
 
