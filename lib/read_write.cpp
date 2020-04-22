@@ -45,12 +45,13 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
         // Do nothing if not txt files
         if (boost::filesystem::path(archive_entry_pathname(entry)).extension() == ".txt") {
             entry_size = archive_entry_size(entry);
-            std::string output(entry_size, char{});
-            //write explicitly to the other buffer
-//            if(output.size() < 10000000){
+            if (entry_size < 10000000) {
+                std::string output(entry_size, char{});
+                //write explicitly to the other buffer
+
                 r = archive_read_data(a, &output[0], output.size());
                 tq->push_back(output);
-//            }
+            }
         }
 
         if (r < ARCHIVE_WARN) {
@@ -61,7 +62,7 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
 //    archive_read_free(a);
 }
 
-void read_from_dir(const std::vector<std::string>& files, t_queue<std::string> *tq) {
+void read_from_dir(const std::vector<std::string> &files, t_queue<std::string> *tq) {
     for (const auto &file_name : files) {
         if (fs::exists(file_name)) {
             std::ifstream raw_file(file_name, std::ios::binary);
