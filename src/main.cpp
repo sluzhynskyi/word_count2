@@ -46,7 +46,7 @@ void merge_dict(t_queue<std::map<std::string, int>> &dict_tq) {
 void count_words_thr(t_queue<std::string> &str_tq, std::map<std::string, int> &dict) {
     while (true) {
         std::string str_txt = str_tq.pop();
-        if (str_txt == "asdfgh") {
+        if (str_txt == "POISON PILL") {
             str_tq.push_back(str_txt);
             break;
         }
@@ -74,7 +74,7 @@ void read_str_from_dir_thr(std::string &in, t_queue<std::string> &str_tq) {
         boost::locale::fold_case(str_txt);
         str_tq.push_back(str_txt);
     }
-    str_tq.push_back(std::string("asdfgh"));
+    str_tq.push_back("POISON PILL");
 }
 
 int main(int argc, char *argv[]) {
