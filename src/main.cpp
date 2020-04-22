@@ -22,13 +22,32 @@
 namespace bl = boost::locale::boundary;
 namespace po = boost::program_options;
 
-void merge_dict(t_queue <std::map<std::string, int>> &dict_tq, std::map<std::string, int> &dict) {
+std::mutex mtx;
+
+void merge_dict(t_queue <std::map<std::string, int>> &dict_tq) {
     std::map<std::string, int> first_map;
     std::map<std::string, int> second_map;
     std::vector <std::map<std::string, int>> merge_pair;
+
+
+
     while (true) {
-        std::cout << "*" << std::flush;
-        merge_pair = dict_tq.pop2();
+
+
+
+
+        mtx.lock();
+        std::cout << dict_tq.get_size() << std::endl;
+        if (dict_tq.get_size() >= 2) {
+            merge_pair = dict_tq.pop2();
+        } else {
+            mtx.unlock();
+            break;
+        }
+
+
+        mtx.unlock();
+
 
         first_map = merge_pair[0];
         second_map = merge_pair[1];
@@ -37,10 +56,11 @@ void merge_dict(t_queue <std::map<std::string, int>> &dict_tq, std::map<std::str
             first_map[x.first] += x.second;
         }
         dict_tq.push_back(first_map);
-        if (merge_pair[0].empty() || merge_pair[1].empty()) {
-            dict_tq.push_back(std::map < std::string, int > {});
-            break;
-        }
+//        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+//        if (merge_pair[0].empty() || merge_pair[1].empty()) {
+//            dict_tq.push_back(std::map < std::string, int > {});
+//            break;
+//        }
     }
     std::cout << "Merge end" << std::endl;
 }
@@ -62,17 +82,25 @@ void count_words_thr(t_queue <std::string> &str_tq, std::map<std::string, int> &
     std::cout << "Counting end" << std::endl;
 }
 
-void read_str_from_dir_thr(std::string &in, t_queue <std::string> &str_tq,t_queue <std::string>& tq, int thr) {
+void read_str_from_dir_thr(std::string &in, t_queue<std::string> &str_tq) {
+    t_queue<std::string> tq;
+    std::vector<std::string> root;
+    root.push_back(in);
+    read_from_dir(root, &tq);
+
 
 //    t_queue<std::string> str_tq;
     std::string str_txt;
-    while ((str_txt = tq.pop()) == "asdfgh") {
+    while (tq.get_size()) {
+        str_txt = std::string(tq.pop());
+//        std::cout << str_txt << std::endl;
         boost::algorithm::to_lower(str_txt);
         boost::locale::normalize(str_txt);
         boost::locale::fold_case(str_txt);
         str_tq.push_back(str_txt);
+//        std::cout << str_txt <<std::endl;
     }
-    str_tq.push_back("asdfgh");
+    str_tq.push_back(std::string("asdfgh"));
 }
 
 int main(int argc, char *argv[]) {
@@ -127,15 +155,15 @@ int main(int argc, char *argv[]) {
     std::map<std::string, int> dict;
     std::vector <std::thread> v;
 
-    t_queue <std::string> tq;
-    std::vector <std::string> root;
-    root.push_back(in);
-    read_from_dir(root, &tq);
+//    t_queue <std::string> tq;
+//    std::vector <std::string> root;
+//    root.push_back(in);
+//    read_from_dir(root, &tq);
 
     if (thr == 1) {
 //        std::cout << "a" <<std::endl;
 
-        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq),std::ref(tq), thr);
+        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
 //        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
 //            ++dict[*it];
 //        }
@@ -157,7 +185,7 @@ int main(int argc, char *argv[]) {
         std::mutex mtx;
 
 
-        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq),std::ref(tq), thr);
+        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
 
 
         for (int i = 0; i < thr; ++i) {
@@ -185,8 +213,8 @@ int main(int argc, char *argv[]) {
 //        std::cout << dict_tq.get_size() << std::endl;
         start_merge = get_current_time_fenced();
 
-        for (int i = 0; i < 1; ++i) {
-            m.emplace_back(merge_dict, std::ref(dict_tq), std::ref(dict));
+        for (int i = 0; i < 2; ++i) {
+            m.emplace_back(merge_dict, std::ref(dict_tq));
         }
 
         for (auto &t: m) {
