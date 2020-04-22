@@ -19,7 +19,7 @@ std::vector<std::string> get_file_list(const std::string &path);
 
 void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq);
 
-void read_from_dir(const std::vector<std::string> files, t_queue<std::string> *tq);
+void read_from_dir(const std::vector<std::string>& files, t_queue<std::string> *tq);
 
 template<class struct_t>
 int write_file(const std::string &filename, struct_t mp) {

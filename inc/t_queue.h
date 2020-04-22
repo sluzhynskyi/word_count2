@@ -8,7 +8,7 @@
 #include <string>
 #include <condition_variable>
 
-template <class T>
+template<class T>
 class t_queue {
 private:
     std::deque<T> queue;
@@ -34,14 +34,27 @@ public:
 
     T pop() {
         std::unique_lock<std::mutex> lg(mut);
-        if (queue.empty()) {
-            cond_variable.wait(lg);
-        }
-        cond_variable.wait(lg, [this]() { return !queue.empty(); });
+        cond_variable.wait(lg, [this]() { return queue.size() != 0; });
         T d = queue.front();
         queue.pop_front();
         return d;
     }
+
+    std::vector<T> pop2() {
+        std::unique_lock<std::mutex> lg(mut);
+        cond_variable.wait(lg, [this]() { return queue.size() >= 2; });
+        std::vector<T> v_d;
+        v_d.push_back(queue.front());
+        queue.pop_front();
+        v_d.push_back(queue.front());
+        queue.pop_front();
+        return v_d;
+    };
+
+    T peek() {
+        T d = queue.front();
+        return d;
+    };
 
     size_t get_size() const {
         std::lock_guard<std::mutex> lg(mut);

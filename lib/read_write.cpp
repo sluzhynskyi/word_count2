@@ -61,7 +61,7 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
 //    archive_read_free(a);
 }
 
-void read_from_dir(const std::vector<std::string> files, t_queue<std::string> *tq) {
+void read_from_dir(const std::vector<std::string>& files, t_queue<std::string> *tq) {
     for (const auto &file_name : files) {
         if (fs::exists(file_name)) {
             std::ifstream raw_file(file_name, std::ios::binary);

@@ -22,10 +22,57 @@
 namespace bl = boost::locale::boundary;
 namespace po = boost::program_options;
 
-void count_words_thr(int from, int to, std::vector<std::string> &words, std::map<std::string, int> &dict) {
-    for (int i = from; i < to; i++) {
-        ++dict[words[i]];
+void merge_dict(t_queue <std::map<std::string, int>> &dict_tq, std::map<std::string, int> &dict) {
+    std::map<std::string, int> first_map;
+    std::map<std::string, int> second_map;
+    std::vector <std::map<std::string, int>> merge_pair;
+    while (true) {
+        std::cout << "*" << std::flush;
+        merge_pair = dict_tq.pop2();
+
+        first_map = merge_pair[0];
+        second_map = merge_pair[1];
+
+        for (const auto &x : second_map) {
+            first_map[x.first] += x.second;
+        }
+        dict_tq.push_back(first_map);
+        if (merge_pair[0].empty() || merge_pair[1].empty()) {
+            dict_tq.push_back(std::map < std::string, int > {});
+            break;
+        }
     }
+    std::cout << "Merge end" << std::endl;
+}
+
+void count_words_thr(t_queue <std::string> &str_tq, std::map<std::string, int> &dict) {
+    while (true) {
+        std::string str_txt = str_tq.pop();
+        if (str_txt == "asdfgh") {
+            str_tq.push_back(str_txt);
+            break;
+        }
+        bl::ssegment_index map(bl::word, str_txt.begin(), str_txt.end());
+        // Define a rule
+        map.rule(bl::word_letters);
+        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
+            ++dict[*it];
+        }
+    }
+    std::cout << "Counting end" << std::endl;
+}
+
+void read_str_from_dir_thr(std::string &in, t_queue <std::string> &str_tq,t_queue <std::string>& tq, int thr) {
+
+//    t_queue<std::string> str_tq;
+    std::string str_txt;
+    while ((str_txt = tq.pop()) == "asdfgh") {
+        boost::algorithm::to_lower(str_txt);
+        boost::locale::normalize(str_txt);
+        boost::locale::fold_case(str_txt);
+        str_tq.push_back(str_txt);
+    }
+    str_tq.push_back("asdfgh");
 }
 
 int main(int argc, char *argv[]) {
@@ -67,71 +114,99 @@ int main(int argc, char *argv[]) {
 
     auto start_load = get_current_time_fenced();
 
-    t_queue<std::string> tq;
-    std::vector<std::string> root;
-    root.push_back(in);
-    read_from_dir(root, &tq);
+    t_queue <std::string> str_tq;
 
 
-    std::string str_txt;
-    while (tq.get_size()) {
-        str_txt += std::string(tq.pop());
-        str_txt += "\n";
-    }
-    boost::algorithm::to_lower(str_txt);
-    boost::locale::normalize(str_txt);
-    boost::locale::fold_case(str_txt);
-
-    bl::ssegment_index map(bl::word, str_txt.begin(), str_txt.end());
-    // Define a rule
-    map.rule(bl::word_letters);
+    auto start_merge = get_current_time_fenced();
+    auto finish_merge = get_current_time_fenced();
 
     auto start_count = get_current_time_fenced();
 
+    auto start_time = get_current_time_fenced();
+
     std::map<std::string, int> dict;
+    std::vector <std::thread> v;
+
+    t_queue <std::string> tq;
+    std::vector <std::string> root;
+    root.push_back(in);
+    read_from_dir(root, &tq);
 
     if (thr == 1) {
-        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
-            ++dict[*it];
+//        std::cout << "a" <<std::endl;
+
+        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq),std::ref(tq), thr);
+//        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
+//            ++dict[*it];
+//        }
+
+        v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dict));
+
+        for (auto &t: v) {
+            t.join();
         }
     } else {
-        std::vector<std::string> words;
-        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
-            words.push_back(*it);
-        }
+        start_count = get_current_time_fenced();
+
         std::map<std::string, int> dicts[thr];
-        std::vector<std::thread> v;
-        int s = words.size();
 
-        for (int i = 0; i < thr - 1; ++i)
-            v.emplace_back(count_words_thr, (s / thr) * i, (s / thr) * (i + 1),
-                           std::ref(words), std::ref(dicts[i]));
+        t_queue <std::map<std::string, int>> dict_tq;
 
-        v.emplace_back(count_words_thr, (s / thr) * (thr - 1), s,
-                       std::ref(words), std::ref(dicts[thr - 1]));
+        std::vector <std::thread> m;
+
+        std::mutex mtx;
+
+
+        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq),std::ref(tq), thr);
+
+
+        for (int i = 0; i < thr; ++i) {
+            v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dicts[i]));
+        }
+
+
+
+//        std::map<std::string, int> dicts_first = dict_tq.pop();
+////        for(std::map<std::string, std::pair<std::string,std::string> >::const_iterator it = dicts_first.begin();
+////                it != dicts_first.end(); ++it)
+////        {
+////            std::cout << it->first << " " << it->second.first << " " << it->second.second << "\n";
+////        }
+
 
         for (auto &t: v) {
             t.join();
         }
 
-        for (const auto &d : dicts) {
-            for (auto &it : d) {
-                dict[it.first] += it.second;
-            }
+        for (auto dict : dicts) {
+            dict_tq.push_back(dict);
         }
+
+//        std::cout << dict_tq.get_size() << std::endl;
+        start_merge = get_current_time_fenced();
+
+        for (int i = 0; i < 1; ++i) {
+            m.emplace_back(merge_dict, std::ref(dict_tq), std::ref(dict));
+        }
+
+        for (auto &t: m) {
+            t.join();
+        }
+
+        dict = dict_tq.pop();
     }
 
     auto finish = get_current_time_fenced();
 
-    auto load_time = start_count - start_load;
-    auto count_time = finish - start_count;
+    auto count_time = start_merge - start_count;
+    auto merge_time = finish - start_merge;
 
-    std::cout << "Loading: " << static_cast<float>(to_ms(load_time)) / 1000 << std::endl;
-    std::cout << "Analyzing: " << static_cast<float>(to_ms(count_time)) / 1000 << std::endl;
-    std::cout << "Total: " << static_cast<float>(to_ms(load_time + count_time)) / 1000 << std::endl;
+    std::cout << "Counting: " << static_cast<float>(to_ms(count_time)) / 1000 << std::endl;
+    std::cout << "Merge: " << static_cast<float>(to_ms(merge_time)) / 1000 << std::endl;
+    std::cout << "Total: " << static_cast<float>(to_ms(merge_time + count_time)) / 1000 << std::endl;
 
     write_file(out_a, dict);
-    std::vector<std::pair<std::string, int>> vec = sort_by_value(dict);
+    std::vector <std::pair<std::string, int>> vec = sort_by_value(dict);
     write_file(out_n, vec);
 
     return 0;

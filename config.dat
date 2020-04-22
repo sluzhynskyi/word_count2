@@ -1,4 +1,4 @@
-in = data_in/6331_big.zip
+in = data_in/file.txt
 out_a = data_out/result_by_name.txt
 out_n = data_out/result_by_number.txt
-thr = 2
+thr = 8
