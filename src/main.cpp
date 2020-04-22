@@ -26,7 +26,6 @@ void merge_dict(t_queue<std::map<std::string, int>> &dict_tq) {
     while (true) {
 
         mtx.lock();
-        std::cout << dict_tq.get_size() << std::endl;
         if (dict_tq.get_size() >= 2) {
             merge_pair = dict_tq.pop2();
         } else {
@@ -42,7 +41,6 @@ void merge_dict(t_queue<std::map<std::string, int>> &dict_tq) {
         }
         dict_tq.push_back(first_map);
     }
-    std::cout << "Merge end" << std::endl;
 }
 
 void count_words_thr(t_queue<std::string> &str_tq, std::map<std::string, int> &dict) {
@@ -59,7 +57,6 @@ void count_words_thr(t_queue<std::string> &str_tq, std::map<std::string, int> &d
             ++dict[*it];
         }
     }
-    std::cout << "Counting end" << std::endl;
 }
 
 void read_str_from_dir_thr(std::string &in, t_queue<std::string> &str_tq) {
@@ -149,7 +146,6 @@ int main(int argc, char *argv[]) {
         std::map<std::string, int> dicts[thr];
         t_queue<std::map<std::string, int>> dict_tq;
         std::vector<std::thread> m;
-        std::mutex mtx;
 
         v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
 
@@ -160,8 +156,8 @@ int main(int argc, char *argv[]) {
             t.join();
         }
 
-        for (auto dict : dicts) {
-            dict_tq.push_back(dict);
+        for (const auto& d : dicts) {
+            dict_tq.push_back(d);
         }
 
         start_merge = get_current_time_fenced();
