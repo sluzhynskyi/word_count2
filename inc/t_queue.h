@@ -20,9 +20,9 @@ public:
 
     ~t_queue() = default;
 
-    t_queue(const t_queue &q) = delete;
+    t_queue(const t_queue<T> &q) = delete;
 
-    const t_queue &operator=(const t_queue &q) = delete;
+    const t_queue &operator=(const t_queue<T> &q) = delete;
 
     void push_back(T d) {
         {
@@ -38,7 +38,7 @@ public:
             cond_variable.wait(lg);
         }
         cond_variable.wait(lg, [this]() { return !queue.empty(); });
-        std::basic_string<char> d = queue.front();
+        T d = queue.front();
         queue.pop_front();
         return d;
     }

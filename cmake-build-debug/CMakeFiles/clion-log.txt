@@ -2,7 +2,6 @@
 -- Found the following ICU libraries:
 --   uc (required)
 --   i18n (required)
--- Found Boost: /usr/include (found version "1.65.1") found components: locale filesystem system program_options 
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-debug
