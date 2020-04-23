@@ -1,4 +1,4 @@
-in = /mnt/iso
+in = /mnt/iso/7
 out_a = data_out/result_by_name.txt
 out_n = data_out/result_by_number.txt
 thr = 4

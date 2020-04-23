@@ -11,11 +11,16 @@
 template<class T>
 class t_queue {
 private:
-    std::deque<T> queue;
+    static const int UPPER_BOUND = 10;
     mutable std::mutex mut;
-    std::condition_variable cond_variable;
+    std::deque<T> queue;
+    std::condition_variable publish_notify;
+    std::condition_variable receive_notify;
+
 
 public:
+
+
     t_queue() = default;
 
     ~t_queue() = default;
@@ -26,35 +31,39 @@ public:
 
     void push_back(T d) {
         {
-            std::lock_guard<std::mutex> lg(mut);
+            std::unique_lock<std::mutex> lg(mut);
+            receive_notify.wait(lg, [this]() { return queue.size() + 1 <= UPPER_BOUND; });
             queue.push_back(d);
         }
-        cond_variable.notify_one();
+        publish_notify.notify_one();
     }
 
     T pop() {
-        std::unique_lock<std::mutex> lg(mut);
-        cond_variable.wait(lg, [this]() { return queue.size() != 0; });
-        T d = queue.front();
-        queue.pop_front();
+        T d;
+        {
+            std::unique_lock<std::mutex> lg(mut);
+            publish_notify.wait(lg, [this]() { return queue.size() != 0; });
+            d = queue.front();
+            queue.pop_front();
+        }
+        receive_notify.notify_one();
         return d;
     }
 
     std::vector<T> pop2() {
-        std::unique_lock<std::mutex> lg(mut);
-        cond_variable.wait(lg, [this]() { return queue.size() >= 2; });
         std::vector<T> v_d;
-        v_d.push_back(queue.front());
-        queue.pop_front();
-        v_d.push_back(queue.front());
-        queue.pop_front();
+        {
+            std::unique_lock<std::mutex> lg(mut);
+            publish_notify.wait(lg, [this]() { return queue.size() >= 2; });
+            v_d.push_back(queue.front());
+            queue.pop_front();
+            v_d.push_back(queue.front());
+            queue.pop_front();
+        }
+        receive_notify.notify_one();
         return v_d;
     };
 
-    T peek() {
-        T d = queue.front();
-        return d;
-    };
 
     size_t get_size() const {
         std::lock_guard<std::mutex> lg(mut);
