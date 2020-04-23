@@ -78,6 +78,7 @@ void read_str_from_dir_thr(std::string &in, t_queue<std::string> &str_tq) {
 }
 
 int main(int argc, char *argv[]) {
+    std::cout << boost::filesystem::current_path().string() << std::endl;
     boost::locale::generator gen;
     std::locale::global(gen("en_us.UTF-8"));
     std::string conf_file;
@@ -164,7 +165,7 @@ int main(int argc, char *argv[]) {
     }
 
     auto finish = get_current_time_fenced();
-    std::cout << "Total: " << static_cast<float>(to_ms(finish - start) / 60)<< std::endl;
+    std::cout << "Total: " << static_cast<float>(to_ms(finish - start)) / 60 << std::endl;
 
     write_file(out_a, dict);
     std::vector<std::pair<std::string, int>> vec = sort_by_value(dict);

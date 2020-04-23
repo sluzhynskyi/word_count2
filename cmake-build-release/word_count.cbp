@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="word_count"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="word_count">
+				<Option output="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/word_count" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 word_count"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="word_count/fast">
+				<Option output="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/word_count" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 word_count/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/inc/read_write.hpp">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/inc/sort.hpp">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/inc/t_queue.h">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/inc/time.hpp">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/lib/read_write.cpp">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/lib/sort.cpp">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/src/main.cpp">
+			<Option target="word_count"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

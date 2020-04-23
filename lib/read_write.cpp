@@ -44,6 +44,7 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
 
         // Do nothing if not txt files
         if (boost::filesystem::path(archive_entry_pathname(entry)).extension() == ".txt") {
+//            std::cout<<boost::filesystem::path(archive_entry_pathname(entry))<<std::endl;
             entry_size = archive_entry_size(entry);
             if (entry_size < 10000000) {
                 std::string output(entry_size, char{});
@@ -70,14 +71,16 @@ void read_from_dir(const std::vector<std::string> &files, t_queue<std::string> *
             buffer_ss << raw_file.rdbuf();
             std::string buffer{buffer_ss.str()};
             if (fs::path(file_name).extension() == ".txt") {
+                std::cout << file_name << std::endl;
                 tq->push_back(buffer);
             } else if (fs::is_directory(fs::path(file_name))) {
                 read_from_dir(get_file_list(file_name), tq);
             } else {
+                std::cout << file_name << std::endl;
                 reading_from_archive(buffer, tq);
             }
         } else {
-            std::cerr << "File: " << file_name << "is't exists" << std::endl;
+            std::cerr << "File: " << file_name << " is't exists" << std::endl;
             exit(1);
         }
     }
