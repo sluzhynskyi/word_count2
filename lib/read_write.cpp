@@ -1,4 +1,6 @@
 #include "../inc/read_write.hpp"
+#include "boost/locale.hpp"
+#include "boost/algorithm/string.hpp"
 
 namespace fs = boost::filesystem;
 
@@ -75,6 +77,9 @@ void read_from_dir(const std::vector<std::string> &files, t_queue<std::string> *
             std::string buffer{buffer_ss.str()};
             if (fs::path(file_name).extension() == ".txt") {
                 std::cout << file_name << std::endl;
+                boost::algorithm::to_lower(buffer);
+                boost::locale::normalize(buffer);
+                boost::locale::fold_case(buffer);
                 tq->push_back(buffer);
             } else if (fs::is_directory(fs::path(file_name))) {
                 read_from_dir(get_file_list(file_name), tq);

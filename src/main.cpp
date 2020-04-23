@@ -58,25 +58,15 @@ void count_words_thr(t_queue<std::string> &str_tq, std::map<std::string, int> &d
 }
 
 void read_str_from_dir_thr(std::string &in, t_queue<std::string> &str_tq) {
-    t_queue<std::string> tq;
     std::vector<std::string> root;
     root.push_back(in);
-    read_from_dir(root, &tq);
-
-
-    std::string str_txt;
-    while (tq.get_size()) {
-        str_txt = std::string(tq.pop());
-        boost::algorithm::to_lower(str_txt);
-        boost::locale::normalize(str_txt);
-        boost::locale::fold_case(str_txt);
-        str_tq.push_back(str_txt);
-    }
+    read_from_dir(root, &str_tq);
     str_tq.push_back("POISON PILL");
+
 }
 
 int main(int argc, char *argv[]) {
-    std::cout << boost::filesystem::current_path().string() << std::endl;
+//    std::cout << boost::filesystem::current_path().string() << std::endl;
     boost::locale::generator gen;
     std::locale::global(gen("en_us.UTF-8"));
     std::string conf_file;

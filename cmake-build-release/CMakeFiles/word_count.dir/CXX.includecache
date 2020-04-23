@@ -60,10 +60,6 @@ chrono
 atomic
 -
 
-/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/lib/read_write.cpp
-../inc/read_write.hpp
-/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/inc/read_write.hpp
-
 /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/src/main.cpp
 iostream
 -
