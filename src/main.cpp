@@ -16,9 +16,7 @@
 namespace bl = boost::locale::boundary;
 namespace po = boost::program_options;
 
-std::mutex mtx;
-
-void merge_dict(t_queue<std::map<std::string, int>> &dict_tq) {
+void merge_dict(t_queue<std::map<std::string, int>> &dict_tq, std::mutex &mtx) {
     std::map<std::string, int> first_map;
     std::map<std::string, int> second_map;
     std::vector<std::map<std::string, int>> merge_pair;
@@ -126,24 +124,44 @@ int main(int argc, char *argv[]) {
     std::chrono::high_resolution_clock::time_point start;
 
     if (thr == 1) {
-
-        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
         start = get_current_time_fenced();
-        v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dict));
 
-        for (auto &t: v) {
-            t.join();
+        t_queue<std::string> tq;
+        std::vector<std::string> root;
+        root.push_back(in);
+        read_from_dir(root, &tq);
+
+
+        std::string str_txt;
+        while (tq.get_size()) {
+            str_txt += std::string(tq.pop());
+            str_txt += "\n";
+        }
+        boost::algorithm::to_lower(str_txt);
+        boost::locale::normalize(str_txt);
+        boost::locale::fold_case(str_txt);
+
+        bl::ssegment_index map(bl::word, str_txt.begin(), str_txt.end());
+
+        map.rule(bl::word_letters);
+
+        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
+            ++dict[*it];
         }
     } else {
         std::map<std::string, int> dicts[thr];
         t_queue<std::map<std::string, int>> dict_tq;
         std::vector<std::thread> m;
+        std::mutex mtx;
+
+        start = get_current_time_fenced();
 
         v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
-        start = get_current_time_fenced();
+
         for (int i = 0; i < thr; ++i) {
             v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dicts[i]));
         }
+
         for (auto &t: v) {
             t.join();
         }
@@ -154,7 +172,7 @@ int main(int argc, char *argv[]) {
 
 
         for (int i = 0; i < merge_thr; ++i) {
-            m.emplace_back(merge_dict, std::ref(dict_tq));
+            m.emplace_back(merge_dict, std::ref(dict_tq), std::ref(mtx));
         }
 
         for (auto &t: m) {
