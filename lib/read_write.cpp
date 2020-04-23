@@ -35,11 +35,13 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
         }
         if (r < ARCHIVE_OK) {
             std::cerr << archive_error_string(a) << std::endl;
+            break;
         }
         if (r < ARCHIVE_WARN) {
             std::cerr << archive_errno(a) << std::endl;
             std::cerr << archive_error_string(a) << std::endl;
-            exit(1);
+//            exit(1);
+            break;
         }
 
         // Do nothing if not txt files
@@ -56,11 +58,12 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
         }
 
         if (r < ARCHIVE_WARN) {
-            exit(1);
+            break;
+//            exit(1);
         }
     }
     archive_read_close(a);
-//    archive_read_free(a);
+    archive_read_free(a);
 }
 
 void read_from_dir(const std::vector<std::string> &files, t_queue<std::string> *tq) {
