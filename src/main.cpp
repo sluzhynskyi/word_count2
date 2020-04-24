@@ -13,8 +13,10 @@
 #include "../inc/read_write.hpp"
 #include "../inc/sort.hpp"
 
+
 namespace bl = boost::locale::boundary;
 namespace po = boost::program_options;
+
 
 void merge_dict(t_queue<std::map<std::string, int>> &dict_tq, std::mutex &mtx) {
     std::map<std::string, int> first_map;
@@ -120,7 +122,6 @@ int main(int argc, char *argv[]) {
         root.push_back(in);
         read_from_dir(root, &tq);
 
-
         std::string str_txt;
         while (tq.get_size()) {
             str_txt += std::string(tq.pop());
@@ -145,7 +146,7 @@ int main(int argc, char *argv[]) {
 
         start = get_current_time_fenced();
 
-        v.emplace_back(read_str_from_dir_thr, std::ref(in), std::ref(str_tq));
+        v.emplace_back(read_str_from_dir_thr, std::ref(in), &str_tq);
 
         for (int i = 0; i < thr; ++i) {
             v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dicts[i]));
