@@ -1,26 +1,27 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
 Change Dir: /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_d5613/fast && /usr/bin/make  -f CMakeFiles/cmTC_d5613.dir/build.make CMakeFiles/cmTC_d5613.dir/build
+Run Build Command(s):/usr/bin/make cmTC_3807d/fast && make: Warning: File 'Makefile' has modification time 0.6 s in the future
+/usr/bin/make  -f CMakeFiles/cmTC_3807d.dir/build.make CMakeFiles/cmTC_3807d.dir/build
 make[1]: Entering directory '/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_d5613.dir/progress.make' has modification time 0.022 s in the future
-Building C object CMakeFiles/cmTC_d5613.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_d5613.dir/src.c.o   -c /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_d5613
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d5613.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_d5613.dir/src.c.o  -o cmTC_d5613 
-CMakeFiles/cmTC_d5613.dir/src.c.o: In function `main':
+make[1]: Warning: File 'CMakeFiles/cmTC_3807d.dir/flags.make' has modification time 0.56 s in the future
+Building C object CMakeFiles/cmTC_3807d.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_3807d.dir/src.c.o   -c /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_3807d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3807d.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_3807d.dir/src.c.o  -o cmTC_3807d 
+CMakeFiles/cmTC_3807d.dir/src.c.o: In function `main':
 src.c:(.text+0x3e): undefined reference to `pthread_create'
 src.c:(.text+0x4a): undefined reference to `pthread_detach'
 src.c:(.text+0x56): undefined reference to `pthread_cancel'
 src.c:(.text+0x67): undefined reference to `pthread_join'
 src.c:(.text+0x7b): undefined reference to `pthread_atfork'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_d5613.dir/build.make:106: recipe for target 'cmTC_d5613' failed
-make[1]: *** [cmTC_d5613] Error 1
+CMakeFiles/cmTC_3807d.dir/build.make:106: recipe for target 'cmTC_3807d' failed
+make[1]: *** [cmTC_3807d] Error 1
 make[1]: Leaving directory '/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp'
-Makefile:141: recipe for target 'cmTC_d5613/fast' failed
-make: *** [cmTC_d5613/fast] Error 2
+Makefile:141: recipe for target 'cmTC_3807d/fast' failed
+make: *** [cmTC_3807d/fast] Error 2
 
 
 Source file was:
@@ -47,21 +48,22 @@ int main(void)
 Determining if the function pthread_create exists in the pthreads failed with the following output:
 Change Dir: /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_77972/fast && /usr/bin/make  -f CMakeFiles/cmTC_77972.dir/build.make CMakeFiles/cmTC_77972.dir/build
+Run Build Command(s):/usr/bin/make cmTC_dbe03/fast && make: Warning: File 'Makefile' has modification time 0.61 s in the future
+/usr/bin/make  -f CMakeFiles/cmTC_dbe03.dir/build.make CMakeFiles/cmTC_dbe03.dir/build
 make[1]: Entering directory '/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_77972.dir/progress.make' has modification time 0.03 s in the future
-Building C object CMakeFiles/cmTC_77972.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_77972.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.17/Modules/CheckFunctionExists.c
-Linking C executable cmTC_77972
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_77972.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_77972.dir/CheckFunctionExists.c.o  -o cmTC_77972  -lpthreads 
+make[1]: Warning: File 'CMakeFiles/cmTC_dbe03.dir/flags.make' has modification time 0.58 s in the future
+Building C object CMakeFiles/cmTC_dbe03.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_dbe03.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.17/Modules/CheckFunctionExists.c
+Linking C executable cmTC_dbe03
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dbe03.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_dbe03.dir/CheckFunctionExists.c.o  -o cmTC_dbe03  -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_77972.dir/build.make:106: recipe for target 'cmTC_77972' failed
-make[1]: *** [cmTC_77972] Error 1
+CMakeFiles/cmTC_dbe03.dir/build.make:106: recipe for target 'cmTC_dbe03' failed
+make[1]: *** [cmTC_dbe03] Error 1
 make[1]: Leaving directory '/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/CMakeFiles/CMakeTmp'
-Makefile:141: recipe for target 'cmTC_77972/fast' failed
-make: *** [cmTC_77972/fast] Error 2
+Makefile:141: recipe for target 'cmTC_dbe03/fast' failed
+make: *** [cmTC_dbe03/fast] Error 2
 
 
 

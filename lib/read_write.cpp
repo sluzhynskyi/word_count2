@@ -24,44 +24,33 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
     off_t entry_size;
     a = archive_read_new();
     archive_read_support_format_all(a);
-//    archive_read_support_filter_all(a);
+    archive_read_support_filter_all(a);
     archive_read_support_format_raw(a);
     // read from buffer, not from the file
-    if ((r = archive_read_open_memory(a, buffer.c_str(), buffer.size()))) {
-        exit(1);
-    }
+    r = archive_read_open_memory(a, buffer.c_str(), buffer.size());
     for (;;) {
         r = archive_read_next_header(a, &entry);
         if (r == ARCHIVE_EOF) {
             break;
         }
         if (r < ARCHIVE_OK) {
-            std::cerr << archive_error_string(a) << std::endl;
             break;
         }
         if (r < ARCHIVE_WARN) {
-            std::cerr << archive_errno(a) << std::endl;
-            std::cerr << archive_error_string(a) << std::endl;
-//            exit(1);
             break;
         }
-
         // Do nothing if not txt files
         if (boost::filesystem::path(archive_entry_pathname(entry)).extension() == ".txt") {
-//            std::cout<<boost::filesystem::path(archive_entry_pathname(entry))<<std::endl;
             entry_size = archive_entry_size(entry);
-            if (entry_size < 10000000) {
-                std::string output(entry_size, char{});
-                //write explicitly to the other buffer
-
-                r = archive_read_data(a, &output[0], output.size());
+            std::string output(entry_size, char{});
+            r = archive_read_data(a, &output[0], output.size());
+            if (output.size() < 10000000) {
+                write explicitly to the other buffer
+                boost::algorithm::to_lower(output);
+                boost::locale::normalize(output);
+                boost::locale::fold_case(output);
                 tq->push_back(output);
             }
-        }
-
-        if (r < ARCHIVE_WARN) {
-            break;
-//            exit(1);
         }
     }
     archive_read_close(a);
@@ -69,24 +58,29 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
 }
 
 void read_from_dir(const std::vector<std::string> &files, t_queue<std::string> *tq) {
+    std::ostringstream buffer_ss;
     for (const auto &file_name : files) {
         if (fs::exists(file_name)) {
-            std::ifstream raw_file(file_name, std::ios::binary);
-            std::ostringstream buffer_ss;
-            buffer_ss << raw_file.rdbuf();
-            std::string buffer{buffer_ss.str()};
-            if (fs::path(file_name).extension() == ".txt") {
-                std::cout << file_name << std::endl;
-                boost::algorithm::to_lower(buffer);
-                boost::locale::normalize(buffer);
-                boost::locale::fold_case(buffer);
-                tq->push_back(buffer);
-            } else if (fs::is_directory(fs::path(file_name))) {
+            if (fs::is_directory(fs::path(file_name))) {
                 read_from_dir(get_file_list(file_name), tq);
             } else {
-                std::cout << file_name << std::endl;
-                reading_from_archive(buffer, tq);
+                std::ifstream raw_file(file_name, std::ios::binary);
+                buffer_ss << raw_file.rdbuf();
+                std::string buffer{buffer_ss.str()};
+                if (fs::path(file_name).extension() == ".txt") {
+                    if (output.size() < 10000000) {
+                        std::cout << file_name << std::endl;
+                        boost::algorithm::to_lower(buffer);
+                        boost::locale::normalize(buffer);
+                        boost::locale::fold_case(buffer);
+                        tq->push_back(buffer);
+                    }
+                } else {
+                    std::cout << file_name << std::endl;
+                    reading_from_archive(buffer, tq);
+                }
             }
+
         } else {
             std::cerr << "File: " << file_name << " is't exists" << std::endl;
             exit(1);

@@ -57,12 +57,11 @@ void count_words_thr(t_queue<std::string> &str_tq, std::map<std::string, int> &d
     }
 }
 
-void read_str_from_dir_thr(std::string &in, t_queue<std::string> &str_tq) {
+void read_str_from_dir_thr(std::string &in, t_queue<std::string> *str_tq) {
     std::vector<std::string> root;
     root.push_back(in);
-    read_from_dir(root, &str_tq);
-    str_tq.push_back("POISON PILL");
-
+    read_from_dir(root, str_tq);
+    str_tq->push_back("POISON PILL");
 }
 
 int main(int argc, char *argv[]) {
