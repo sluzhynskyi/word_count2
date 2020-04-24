@@ -115,28 +115,12 @@ int main(int argc, char *argv[]) {
     std::chrono::high_resolution_clock::time_point start;
 
     if (thr == 1) {
+        v.emplace_back(read_str_from_dir_thr, std::ref(in), &str_tq);
         start = get_current_time_fenced();
+        v.emplace_back(count_words_thr, std::ref(str_tq), std::ref(dict));
 
-        t_queue<std::string> tq;
-        std::vector<std::string> root;
-        root.push_back(in);
-        read_from_dir(root, &tq);
-
-        std::string str_txt;
-        while (tq.get_size()) {
-            str_txt += std::string(tq.pop());
-            str_txt += "\n";
-        }
-        boost::algorithm::to_lower(str_txt);
-        boost::locale::normalize(str_txt);
-        boost::locale::fold_case(str_txt);
-
-        bl::ssegment_index map(bl::word, str_txt.begin(), str_txt.end());
-
-        map.rule(bl::word_letters);
-
-        for (bl::ssegment_index::iterator it = map.begin(), e = map.end(); it != e; ++it) {
-            ++dict[*it];
+        for (auto &t: v) {
+            t.join();
         }
     } else {
         std::map<std::string, int> dicts[thr];

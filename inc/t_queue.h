@@ -11,7 +11,7 @@
 template<class T>
 class t_queue {
 private:
-    static const int UPPER_BOUND = 10;
+    static const int UPPER_BOUND = 100;
     mutable std::mutex mut;
     std::deque<T> queue;
     std::condition_variable publish_notify;
