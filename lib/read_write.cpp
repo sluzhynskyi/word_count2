@@ -46,10 +46,7 @@ void reading_from_archive(const std::string &buffer, t_queue<std::string> *tq) {
             r = archive_read_data(a, &output[0], output.size());
             if (output.size() < 10000000) {
                 // write explicitly to the other buffer
-                boost::algorithm::to_lower(output);
-                boost::locale::normalize(output);
-                boost::locale::fold_case(output);
-                tq->push_back(output);
+                tq->push_back(boost::locale::fold_case(boost::locale::normalize(output)));
             }
         }
     }
@@ -70,10 +67,7 @@ void read_from_dir(const std::vector<std::string> &files, t_queue<std::string> *
                 if (fs::path(file_name).extension() == ".txt") {
                     if (buffer.size() < 10000000) {
                         std::cout << file_name << std::endl;
-                        boost::algorithm::to_lower(buffer);
-                        boost::locale::normalize(buffer);
-                        boost::locale::fold_case(buffer);
-                        tq->push_back(buffer);
+                        tq->push_back(boost::locale::fold_case(boost::locale::normalize(buffer)));
                     }
                 } else {
                     std::cout << file_name << std::endl;

@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+
+<valgrindoutput>
+
+<protocolversion>4</protocolversion>
+<protocoltool>memcheck</protocoltool>
+
+<preamble>
+  <line>Memcheck, a memory error detector</line>
+  <line>Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.</line>
+  <line>Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info</line>
+  <line>Command: /mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/word_count</line>
+</preamble>
+
+<pid>6120</pid>
+<ppid>1245</ppid>
+<tool>memcheck</tool>
+
+<args>
+  <vargv>
+    <exe>/usr/bin/valgrind.bin</exe>
+    <arg>--tool=memcheck</arg>
+    <arg>--xml=yes</arg>
+    <arg>--xml-file=/mnt/c/Users/sluzhynskyi/AppData/Local/Temp/valgrind</arg>
+    <arg>--gen-suppressions=all</arg>
+    <arg>--leak-check=full</arg>
+    <arg>--leak-resolution=med</arg>
+    <arg>--track-origins=yes</arg>
+    <arg>--vgdb=no</arg>
+  </vargv>
+  <argv>
+    <exe>/mnt/c/Users/sluzhynskyi/Documents/ClionProjects/word_count2/cmake-build-release/word_count</exe>
+  </argv>
+</args>
+
+<status>
+  <state>RUNNING</state>
+  <time>00:00:00:00.135 </time>
+</status>
+
+
+<status>
+  <state>FINISHED</state>
+  <time>00:00:00:03.173 </time>
+</status>
+
+<error>
+  <unique>0xb2</unique>
+  <tid>1</tid>
+  <kind>Leak_PossiblyLost</kind>
+  <xwhat>
+    <text>1,376 bytes in 4 blocks are possibly lost in loss record 179 of 190</text>
+    <leakedbytes>1376</leakedbytes>
+    <leakedblocks>4</leakedblocks>
+  </xwhat>
+  <stack>
+    <frame>
+      <ip>0x4C2FB0F</ip>
+      <obj>/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so</obj>
+      <fn>malloc</fn>
+    </frame>
+    <frame>
+      <ip>0x6DA56B6</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicuuc.so.60.2</obj>
+      <fn>icu_60::UnicodeString::allocate(int)</fn>
+    </frame>
+    <frame>
+      <ip>0x6DA73A8</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicuuc.so.60.2</obj>
+      <fn>icu_60::UnicodeString::cloneArrayIfNeeded(int, int, signed char, int**, signed char)</fn>
+    </frame>
+    <frame>
+      <ip>0x6DA7940</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicuuc.so.60.2</obj>
+      <fn>icu_60::UnicodeString::doAppend(char16_t const*, int, int)</fn>
+    </frame>
+    <frame>
+      <ip>0x6E1566D</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicuuc.so.60.2</obj>
+      <fn>icu_60::SimpleFormatter::format(char16_t const*, int, icu_60::UnicodeString const* const*, icu_60::UnicodeString&amp;, icu_60::UnicodeString const*, signed char, int*, int, UErrorCode&amp;)</fn>
+    </frame>
+    <frame>
+      <ip>0x6E1583B</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicuuc.so.60.2</obj>
+      <fn>icu_60::SimpleFormatter::formatAndAppend(icu_60::UnicodeString const* const*, int, icu_60::UnicodeString&amp;, int*, int, UErrorCode&amp;) const</fn>
+    </frame>
+    <frame>
+      <ip>0x6E15915</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicuuc.so.60.2</obj>
+      <fn>icu_60::SimpleFormatter::format(icu_60::UnicodeString const&amp;, icu_60::UnicodeString const&amp;, icu_60::UnicodeString&amp;, UErrorCode&amp;) const</fn>
+    </frame>
+    <frame>
+      <ip>0x693E29E</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicui18n.so.60.2</obj>
+      <fn>icu_60::SimpleDateFormat::construct(icu_60::DateFormat::EStyle, icu_60::DateFormat::EStyle, icu_60::Locale const&amp;, UErrorCode&amp;)</fn>
+    </frame>
+    <frame>
+      <ip>0x693F00D</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicui18n.so.60.2</obj>
+      <fn>icu_60::SimpleDateFormat::SimpleDateFormat(icu_60::DateFormat::EStyle, icu_60::DateFormat::EStyle, icu_60::Locale const&amp;, UErrorCode&amp;)</fn>
+    </frame>
+    <frame>
+      <ip>0x69385C9</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libicui18n.so.60.2</obj>
+      <fn>icu_60::DateFormat::create(icu_60::DateFormat::EStyle, icu_60::DateFormat::EStyle, icu_60::Locale const&amp;)</fn>
+    </frame>
+    <frame>
+      <ip>0x4EE189B</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libboost_locale.so.1.65.1</obj>
+      <fn>boost::locale::impl_icu::icu_formatters_cache::icu_formatters_cache(icu_60::Locale const&amp;)</fn>
+    </frame>
+    <frame>
+      <ip>0x4EE1B47</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libboost_locale.so.1.65.1</obj>
+      <fn>std::locale boost::locale::impl_icu::install_formatting_facets&lt;char&gt;(std::locale const&amp;, boost::locale::impl_icu::cdata const&amp;)</fn>
+    </frame>
+  </stack>
+  <suppression>
+    <sname>insert_a_suppression_name_here</sname>
+    <skind>Memcheck:Leak</skind>
+    <skaux>match-leak-kinds: possible</skaux>
+    <sframe> <fun>malloc</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6013UnicodeString8allocateEi</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6013UnicodeString18cloneArrayIfNeededEiiaPPia</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6013UnicodeString8doAppendEPKDsii</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6015SimpleFormatter6formatEPKDsiPKPKNS_13UnicodeStringERS3_S5_aPiiR10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZNK6icu_6015SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZNK6icu_6015SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6016SimpleDateFormat9constructENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6016SimpleDateFormatC1ENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6010DateFormat6createENS0_6EStyleES1_RKNS_6LocaleE</fun> </sframe>
+    <sframe> <fun>_ZN5boost6locale8impl_icu20icu_formatters_cacheC1ERKN6icu_606LocaleE</fun> </sframe>
+    <sframe> <fun>_ZN5boost6locale8impl_icu25install_formatting_facetsIcEESt6localeRKS3_RKNS1_5cdataE</fun> </sframe>
+    <rawtext>
+<![CDATA[
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:_ZN6icu_6013UnicodeString8allocateEi
+   fun:_ZN6icu_6013UnicodeString18cloneArrayIfNeededEiiaPPia
+   fun:_ZN6icu_6013UnicodeString8doAppendEPKDsii
+   fun:_ZN6icu_6015SimpleFormatter6formatEPKDsiPKPKNS_13UnicodeStringERS3_S5_aPiiR10UErrorCode
+   fun:_ZNK6icu_6015SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode
+   fun:_ZNK6icu_6015SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode
+   fun:_ZN6icu_6016SimpleDateFormat9constructENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode
+   fun:_ZN6icu_6016SimpleDateFormatC1ENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode
+   fun:_ZN6icu_6010DateFormat6createENS0_6EStyleES1_RKNS_6LocaleE
+   fun:_ZN5boost6locale8impl_icu20icu_formatters_cacheC1ERKN6icu_606LocaleE
+   fun:_ZN5boost6locale8impl_icu25install_formatting_facetsIcEESt6localeRKS3_RKNS1_5cdataE
+}
+]]>
+    </rawtext>
+  </suppression>
+</error>
+
+  <suppression>
+    <sname>insert_a_suppression_name_here</sname>
+    <skind>Memcheck:Leak</skind>
+    <skaux>match-leak-kinds: possible</skaux>
+    <sframe> <fun>malloc</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6013UnicodeString8allocateEi</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6013UnicodeString18cloneArrayIfNeededEiiaPPia</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6013UnicodeString8doAppendEPKDsii</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6015SimpleFormatter6formatEPKDsiPKPKNS_13UnicodeStringERS3_S5_aPiiR10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZNK6icu_6015SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZNK6icu_6015SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6016SimpleDateFormat9constructENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6016SimpleDateFormatC1ENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode</fun> </sframe>
+    <sframe> <fun>_ZN6icu_6010DateFormat6createENS0_6EStyleES1_RKNS_6LocaleE</fun> </sframe>
+    <sframe> <fun>_ZN5boost6locale8impl_icu20icu_formatters_cacheC1ERKN6icu_606LocaleE</fun> </sframe>
+    <sframe> <fun>_ZN5boost6locale8impl_icu25install_formatting_facetsIcEESt6localeRKS3_RKNS1_5cdataE</fun> </sframe>
+    <rawtext>
+<![CDATA[
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:_ZN6icu_6013UnicodeString8allocateEi
+   fun:_ZN6icu_6013UnicodeString18cloneArrayIfNeededEiiaPPia
+   fun:_ZN6icu_6013UnicodeString8doAppendEPKDsii
+   fun:_ZN6icu_6015SimpleFormatter6formatEPKDsiPKPKNS_13UnicodeStringERS3_S5_aPiiR10UErrorCode
+   fun:_ZNK6icu_6015SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode
+   fun:_ZNK6icu_6015SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode
+   fun:_ZN6icu_6016SimpleDateFormat9constructENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode
+   fun:_ZN6icu_6016SimpleDateFormatC1ENS_10DateFormat6EStyleES2_RKNS_6LocaleER10UErrorCode
+   fun:_ZN6icu_6010DateFormat6createENS0_6EStyleES1_RKNS_6LocaleE
+   fun:_ZN5boost6locale8impl_icu20icu_formatters_cacheC1ERKN6icu_606LocaleE
+   fun:_ZN5boost6locale8impl_icu25install_formatting_facetsIcEESt6localeRKS3_RKNS1_5cdataE
+}
+]]>
+    </rawtext>
+  </suppression>
+<errorcounts>
+</errorcounts>
+
+<suppcounts>
+</suppcounts>
+
+</valgrindoutput>
+
